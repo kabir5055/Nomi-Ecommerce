@@ -79,9 +79,20 @@
                     <i class="fas fa-star"></i>
                     <i class="far fa-star"></i>
                 </div> -->
-                <a href="{{ route('front.details',['product_slug'=>$product->product_slug]) }}">
-                <button class="btn nomi-btn">Add to Cart</button>
-                </a>
+                <form action="{{ route('front.products.buy.now') }}" method="POST" class="mt-3"> <!-- Form outside the design structure -->
+                    @csrf
+                      @if($product->discount_type)
+                          <input type="hidden" name="sale_price" value="{{ $discounted_price }}">
+                      @else
+                          <input type="hidden" name="sale_price" value="{{ $product->sale_price }}">
+                      @endif
+                      <input type="hidden" name="product_id" value="{{ $product->id }}">
+                      <input type="hidden" name="selected_size" value="{{ $product->size }}">
+                      <input type="hidden" name="selected_color" value="{{ $product->color }}">
+                      <input type="hidden" name="quantity" value="1">
+
+                    <button type="submit" class="btn nomi-btn w-100 mb-2"><i class="fa fa-shopping-bag"></i> Buy Now</button>
+                </form>
             </div>
 
         </div>

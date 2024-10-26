@@ -8,7 +8,7 @@
 <style>
   #featured-category-area{margin: 20px 0px;padding: 0}.category-title{border-bottom: 1px solid #002366;margin-bottom: 10px;position: relative}.category-title h4{text-transform: uppercase;font-weight: 600;font-size: 15px;color: #000;letter-spacing: 1px}.table thead{background: var(--btn-bg);background:#000;color: #fff}.cart-product table th{background: #0056b3;color: #fff}.cart-product table th{background: #e6f2ff;color: #000}.coupon-area{border: 1px solid rgba(0,0,0,.1);padding: 10px;height: 140px;margin-bottom: 10px}button.coupon-btn{color: #000;padding: 10px 25px;text-decoration: none;font-size: 16px;float: left;border: none;margin-top: 10px;border:1px solid #007bff;font-weight: 600}
 
-.category{padding: 20px;background: #fff;margin: 0;border: 1px solid rgba(0,0,0,.1)}.update-btn{background: #002366;border: none;font-size: 12px;padding: 5px 5px;border-radius:3px;color: #fff}.trash-btn{background:transparent;color: #818a91}.trash-btn:hover{background:transparent;color: red}#quantity_input{width: 60px}.nomi-cart-btn{font-size: 14px;background: #002366;padding: 10px 15px;margin: 0px 10px 0px 0px;color: #fff;transition: transform 0.3s ease}.nomi-cart-btn:hover{background: #ff6f00;transform: scale(1.05)}.continue-back{margin-top: 10px}
+.category{padding: 20px;background: #fff;margin: 0;border: 1px solid rgba(0,0,0,.1)}.update-btn{background: #002366;border: none;font-size: 12px;padding: 5px 5px;border-radius:3px;color: #fff}.trash-btn{background:transparent;color: #818a91}.trash-btn:hover{background:transparent;color: red}.quantity_input{width: 60px}.quantity-btn{width: 20px;}.nomi-cart-btn{font-size: 14px;background: #002366;padding: 10px 15px;margin: 0px 10px 0px 0px;color: #fff;transition: transform 0.3s ease}.nomi-cart-btn:hover{background: #ff6f00;transform: scale(1.05)}.continue-back{margin-top: 10px}
   </style>
 @endpush
 
@@ -74,16 +74,20 @@
                                 <td>{{ $info->size != "null" ? $info->size : '' }}</td>
                                 <td>{{ $info->color != "null" ? $info->color : '' }}</td>
                                 <td>
-                                       <form action="{{ route('front.product.cart.update') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="product_id" value="{{ $info->product_id }}">
-                                            <input type="hidden" name="color" value="{{ $info->color }}">
-                                            <input type="hidden" name="size" value="{{ $info->size }}">
-                                            <input type="number" name="quantity" min="1" value="{{ $info->quantity }}" id="quantity_input">
-                                            <button type="submit" class="update-btn">
-                                                Update
-                                            </button>
-                                        </form>
+                                    <form id="cart-update-form-{{ $info->product_id }}">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $info->product_id }}">
+                                        <input type="hidden" name="color" value="{{ $info->color }}">
+                                        <input type="hidden" name="size" value="{{ $info->size }}">
+                                        <!-- Minus Button -->
+                                        <button type="button" class="quantity-btn" data-product-id="{{ $info->product_id }}" data-action="decrease">-</button>
+                                                
+                                        <!-- Quantity Input Field -->
+                                        <input type="number" name="quantity" min="1" value="{{ $info->quantity }}" class="quantity_input" data-product-id="{{ $info->product_id }}" id="quantity-{{ $info->product_id }}" readonly>
+
+                                        <!-- Plus Button -->
+                                        <button type="button" class="quantity-btn" data-product-id="{{ $info->product_id }}" data-action="increase">+</button>                                    
+                                    </form>
                                 </td>
                                 <td>{{ $info->unit_total }} &#2547;</td>
                                 <td>
@@ -149,25 +153,44 @@
 
 @push('scripts')
 <script>
-$(document).ready(function() {
-    $('#shipping_charge').change(function() {
-        $('#checkout_btn').hide();
-        var charge = $(this).val();
-        var sub_total_price = $('#sub_total_price').val();
-        // var sub_total_price = $('#sub_total_after_discount').val();
+$(document).ready(function () {
+        $('.quantity-btn').on('click', function () {
+            let productId = $(this).data('product-id');
+            let action = $(this).data('action');
+            let quantityInput = $('#quantity-' + productId);
+            let currentQuantity = parseInt(quantityInput.val());
 
-        if (charge == '') {
-            $('#checkout_btn').hide();
-        } else {
-            $('#checkout_btn').show();
+            if (action === 'increase') {
+                quantityInput.val(currentQuantity + 1);
+            } else if (action === 'decrease' && currentQuantity > 1) {
+                quantityInput.val(currentQuantity - 1);
+            }
+
+            updateCart(productId);
+        });
+
+        function updateCart(productId) {
+            let formData = {
+                _token: $('input[name="_token"]').val(),
+                product_id: productId,
+                color: $('#cart-update-form-' + productId + ' input[name="color"]').val(),
+                size: $('#cart-update-form-' + productId + ' input[name="size"]').val(),
+                quantity: $('#quantity-' + productId).val()
+            };
+
+            $.ajax({
+                url: "{{ route('front.product.cart.update') }}",
+                method: "POST",
+                data: formData,
+                success: function (response) {
+                    console.log('Cart updated successfully!');
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    alert('Failed to update cart. Please try again.');
+                }
+            });
         }
-
-        var totalPrice = parseFloat(charge) + parseFloat(sub_total_price);
-        $('#charge_show').val(charge + '৳');
-        $('#total_show').val(totalPrice + '৳');
-        $('#hidden_shipping_charge').val(charge);
-        $('#hidden_grand_total').val(totalPrice);
     });
-});
 </script>
 @endpush

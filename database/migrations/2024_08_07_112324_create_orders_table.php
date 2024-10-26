@@ -19,6 +19,8 @@ return new class extends Migration
             $table->float('subtotal_amount');
             $table->float('shipping_charge')->nullable();
             $table->float('coupon_amount')->nullable();
+            $table->string('delivery_status')->default('pending');
+            $table->string('payment_status')->default('unpaid');
             $table->string('date');
             $table->timestamps();
         });

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 24, 2024 at 09:26 AM
+-- Generation Time: Oct 26, 2024 at 06:46 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.2.24
 
@@ -377,7 +377,7 @@ INSERT INTO `links` (`id`, `link_type_id`, `link_name`, `url`, `slug`, `descript
 (6, '6', 'Brand', 'http://127.0.0.1:8000/brands', '-7uFZr', '<p>Brand</p>', 1, '2024-10-23 04:10:26', '2024-10-23 04:10:26'),
 (7, '6', 'Categories', 'http://127.0.0.1:8000/categories', '-ollg8', 'Category', 1, '2024-10-23 04:11:17', '2024-10-23 04:11:17'),
 (8, '6', 'Contact Us', 'http://127.0.0.1:8000/contacts', '', '<p>Contact Us</p>', 1, '2024-10-23 04:12:13', '2024-10-23 13:02:14'),
-(9, '5', 'Contacts', 'https://www.facebook.com', '', 'Facebook', 1, '2024-10-23 04:13:36', '2024-10-23 17:52:45'),
+(9, '5', 'Contacts', 'http://127.0.0.1:8000/contact', '', 'Facebook', 1, '2024-10-23 04:13:36', '2024-10-24 11:12:44'),
 (10, '6', 'Terms And Conditions', 'http://127.0.0.1:8000/terms-and-conditions', '', '<p>Terms And Conditions<br></p>', 1, '2024-10-24 04:43:25', '2024-10-24 04:43:25');
 
 -- --------------------------------------------------------
@@ -542,6 +542,8 @@ CREATE TABLE `orders` (
   `subtotal_amount` double(8,2) NOT NULL,
   `shipping_charge` double(8,2) DEFAULT NULL,
   `coupon_amount` double(8,2) DEFAULT NULL,
+  `delivery_status` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `payment_status` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unpaid',
   `date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -551,17 +553,20 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `info_id`, `order_no`, `grand_total`, `subtotal_amount`, `shipping_charge`, `coupon_amount`, `date`, `created_at`, `updated_at`) VALUES
-(1, '1', 'KSS-000001', 9950.00, 10000.00, 0.00, 50.00, '21-10-2024', '2024-10-21 13:35:10', '2024-10-21 13:35:10'),
-(7, '1', 'KSS-000002', 10000.00, 10000.00, 0.00, 0.00, '24-10-2024', '2024-10-24 05:43:51', '2024-10-24 05:43:51'),
-(8, '1', 'KSS-000003', 10000.00, 10000.00, 0.00, 0.00, '24-10-2024', '2024-10-24 05:46:39', '2024-10-24 05:46:39'),
-(9, '1', 'KSS-000004', 10000.00, 10000.00, 0.00, 0.00, '24-10-2024', '2024-10-24 05:46:56', '2024-10-24 05:46:56'),
-(10, '1', 'KSS-000005', 10000.00, 10000.00, 0.00, 0.00, '24-10-2024', '2024-10-24 05:47:40', '2024-10-24 05:47:40'),
-(11, '1', 'KSS-000006', 10000.00, 10000.00, 0.00, 0.00, '24-10-2024', '2024-10-24 05:49:29', '2024-10-24 05:49:29'),
-(12, '1', 'KSS-000007', 10000.00, 10000.00, 0.00, 0.00, '24-10-2024', '2024-10-24 05:50:23', '2024-10-24 05:50:23'),
-(13, '1', 'KSS-000008', 10000.00, 10000.00, 0.00, 0.00, '24-10-2024', '2024-10-24 05:50:41', '2024-10-24 05:50:41'),
-(23, '1', 'KSS-000009', 10000.00, 10000.00, 0.00, 0.00, '24-10-2024', '2024-10-24 06:07:43', '2024-10-24 06:07:43'),
-(25, '1', 'KSS-000010', 2000.00, 2000.00, 0.00, 0.00, '24-10-2024', '2024-10-24 06:12:12', '2024-10-24 06:12:12');
+INSERT INTO `orders` (`id`, `info_id`, `order_no`, `grand_total`, `subtotal_amount`, `shipping_charge`, `coupon_amount`, `delivery_status`, `payment_status`, `date`, `created_at`, `updated_at`) VALUES
+(1, '1', 'KSS-000001', 9950.00, 10000.00, 0.00, 50.00, 'pending', 'unpaid', '21-10-2024', '2024-10-21 13:35:10', '2024-10-21 13:35:10'),
+(7, '1', 'KSS-000002', 10000.00, 10000.00, 0.00, 0.00, 'pending', 'unpaid', '24-10-2024', '2024-10-24 05:43:51', '2024-10-24 05:43:51'),
+(8, '1', 'KSS-000003', 10000.00, 10000.00, 0.00, 0.00, 'pending', 'unpaid', '24-10-2024', '2024-10-24 05:46:39', '2024-10-24 05:46:39'),
+(9, '1', 'KSS-000004', 10000.00, 10000.00, 0.00, 0.00, 'pending', 'unpaid', '24-10-2024', '2024-10-24 05:46:56', '2024-10-24 05:46:56'),
+(10, '1', 'KSS-000005', 10000.00, 10000.00, 0.00, 0.00, 'pending', 'unpaid', '24-10-2024', '2024-10-24 05:47:40', '2024-10-24 05:47:40'),
+(11, '1', 'KSS-000006', 10000.00, 10000.00, 0.00, 0.00, 'pending', 'unpaid', '24-10-2024', '2024-10-24 05:49:29', '2024-10-24 05:49:29'),
+(12, '1', 'KSS-000007', 10000.00, 10000.00, 0.00, 0.00, 'pending', 'unpaid', '24-10-2024', '2024-10-24 05:50:23', '2024-10-24 05:50:23'),
+(13, '1', 'KSS-000008', 10000.00, 10000.00, 0.00, 0.00, 'pending', 'unpaid', '24-10-2024', '2024-10-24 05:50:41', '2024-10-24 05:50:41'),
+(23, '1', 'KSS-000009', 10000.00, 10000.00, 0.00, 0.00, 'pending', 'unpaid', '24-10-2024', '2024-10-24 06:07:43', '2024-10-24 06:07:43'),
+(25, '1', 'KSS-000010', 2000.00, 2000.00, 0.00, 0.00, 'pending', 'unpaid', '24-10-2024', '2024-10-24 06:12:12', '2024-10-24 06:12:12'),
+(26, '1', 'KSS-000011', 2000.00, 2000.00, 0.00, 0.00, 'pending', 'unpaid', '24-10-2024', '2024-10-24 10:03:59', '2024-10-24 10:03:59'),
+(27, '1', 'KSS-000012', 3000.00, 3000.00, 0.00, 0.00, 'pending', 'unpaid', '24-10-2024', '2024-10-24 11:26:27', '2024-10-24 11:26:27'),
+(28, '1', 'KSS-000013', 14450.00, 14500.00, 0.00, 50.00, 'approved', 'paid', '26-10-2024', '2024-10-26 06:04:29', '2024-10-26 06:40:56');
 
 -- --------------------------------------------------------
 
@@ -601,7 +606,15 @@ INSERT INTO `order_details` (`id`, `info_id`, `order_id`, `seller_id`, `product_
 (20, '1', 25, NULL, 13, 'null', 'null', 500.00, 1, 500.00, 'pending', '2024-10-24 06:12:12', '2024-10-24 06:12:12'),
 (21, '1', 25, NULL, 9, 'null', 'null', 500.00, 1, 500.00, 'pending', '2024-10-24 06:12:12', '2024-10-24 06:12:12'),
 (22, '1', 25, NULL, 10, 'null', 'null', 500.00, 1, 500.00, 'pending', '2024-10-24 06:12:12', '2024-10-24 06:12:12'),
-(23, '1', 25, NULL, 14, 'null', 'null', 500.00, 1, 500.00, 'pending', '2024-10-24 06:12:12', '2024-10-24 06:12:12');
+(23, '1', 25, NULL, 14, 'null', 'null', 500.00, 1, 500.00, 'pending', '2024-10-24 06:12:12', '2024-10-24 06:12:12'),
+(24, '1', 26, NULL, 9, '', '', 500.00, 1, 500.00, 'pending', '2024-10-24 10:03:59', '2024-10-24 10:03:59'),
+(25, '1', 26, NULL, 9, '', '', 500.00, 1, 500.00, 'pending', '2024-10-24 10:03:59', '2024-10-24 10:03:59'),
+(26, '1', 26, NULL, 12, '', '', 500.00, 1, 500.00, 'pending', '2024-10-24 10:03:59', '2024-10-24 10:03:59'),
+(27, '1', 26, NULL, 12, '', '', 500.00, 1, 500.00, 'pending', '2024-10-24 10:03:59', '2024-10-24 10:03:59'),
+(28, '1', 27, NULL, 15, 'null', 'null', 500.00, 1, 500.00, 'pending', '2024-10-24 11:26:27', '2024-10-24 11:26:27'),
+(29, '1', 27, NULL, 14, 'null', 'null', 500.00, 1, 500.00, 'pending', '2024-10-24 11:26:27', '2024-10-24 11:26:27'),
+(30, '1', 27, NULL, 16, '', '', 200.00, 10, 2000.00, 'pending', '2024-10-24 11:26:27', '2024-10-24 11:26:27'),
+(31, '1', 28, NULL, 14, 'null', 'null', 500.00, 29, 14500.00, 'pending', '2024-10-26 06:04:29', '2024-10-26 06:04:29');
 
 -- --------------------------------------------------------
 
@@ -683,7 +696,10 @@ INSERT INTO `payments` (`id`, `info_id`, `grand_total`, `shipping_charge`, `paym
 (10, '1', 10000.00, 0.00, 'cash', '24-10-2024', '2024-10-24 05:50:23', '2024-10-24 05:50:23'),
 (11, '1', 10000.00, 0.00, 'cash', '24-10-2024', '2024-10-24 05:50:41', '2024-10-24 05:50:41'),
 (21, '1', 10000.00, 0.00, 'cash', '24-10-2024', '2024-10-24 06:07:43', '2024-10-24 06:07:43'),
-(23, '1', 2000.00, 0.00, 'cash', '24-10-2024', '2024-10-24 06:12:12', '2024-10-24 06:12:12');
+(23, '1', 2000.00, 0.00, 'cash', '24-10-2024', '2024-10-24 06:12:12', '2024-10-24 06:12:12'),
+(24, '1', 2000.00, 0.00, 'cash', '24-10-2024', '2024-10-24 10:03:59', '2024-10-24 10:03:59'),
+(25, '1', 3000.00, 0.00, 'cash', '24-10-2024', '2024-10-24 11:26:27', '2024-10-24 11:26:27'),
+(26, '1', 14450.00, 0.00, 'cash', '26-10-2024', '2024-10-26 06:04:29', '2024-10-26 06:04:29');
 
 -- --------------------------------------------------------
 
@@ -760,13 +776,15 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `subcategory_id`, `brand_id`, `unit_id`, `color`, `size`, `product_name`, `product_slug`, `sale_price`, `discount_type`, `discount_price`, `quantity`, `product_description`, `product_image`, `product_gallery`, `status`, `is_featured`, `is_todays_deal`, `created_at`, `updated_at`) VALUES
-(9, 33, NULL, 4, 9, 'null', 'null', 'Karkuma Organic Apple Cider Vinegar Bundle Package', 'karkuma-organic-apple-cider-vinegar-bundle-package', 500.00, NULL, NULL, 1000, 'Karkuma Organic Apple Cider Vinegar Bundle Package', '', '[]', 1, 1, 0, '2024-09-25 19:47:46', '2024-10-09 09:41:21'),
-(10, 33, NULL, 4, 9, 'null', 'null', 'Karkuma Organic Apple Cider Vinegar Bundle Package', 'karkuma-organic-apple-cider-vinegar-bundle-package', 500.00, NULL, NULL, 1000, 'Karkuma Organic Apple Cider Vinegar Bundle Package', '', '[]', 1, 1, 0, '2024-09-25 19:51:19', '2024-10-09 09:41:22'),
-(11, 33, 5, 4, 9, 'null', 'null', 'Karkuma Superfood', 'karkuma-superfood', 500.00, 'percent', 5.00, 1000, 'The Karkuma Superfood is a functional food product, specially formulated for the betterment of women’s menstrual health. Its all raw materials are United State Department of Agriculture (USDA) Organic certiﬁed and collected from the different authentic sources in the world', '', '[]', 1, 1, 1, '2024-09-25 19:55:29', '2024-09-25 20:04:57'),
-(12, 33, NULL, 4, 9, 'null', 'null', 'Karkuma Joint Guard', 'karkuma-joint-guard', 500.00, NULL, NULL, 1000, 'Karkuma Joint Guard is a functional food product, specially formulated to natural care for bone joint. Its basic raw materials are United State Department of Agriculture (USDA) Organic certiﬁed and collected from teh different autantic sources in teh world.', '', '[]', 1, 1, 1, '2024-09-25 20:01:44', '2024-09-25 20:04:58'),
-(13, 33, NULL, 4, 9, 'null', 'null', 'Karkuma Organic Honey 400g', 'karkuma-organic-honey-400g', 500.00, NULL, NULL, 1000, 'Teh Karkuma Organic Honey is loaded wif more TEMPthan 900 plant compounds and extracted from teh heart of teh beehive. It is collected from a variety of flowers and is teh rarest honey in teh world. Teh uniqueness of teh black honey provides us wif health benefits that go beyond teh benefits of regular honey. This honey is a magic remedy for daily consumption. It is loaded wif nutrition and enzymes, beneficial for our health and wellness.', '', '[]', 1, 0, 0, '2024-09-25 20:07:02', '2024-10-09 10:02:53'),
+(9, 33, NULL, 4, 9, NULL, NULL, 'Karkuma Organic Apple Cider Vinegar Bundle Package', 'karkuma-organic-apple-cider-vinegar-bundle-package', 500.00, 'Select Type', NULL, 1000, 'Karkuma Organic Apple Cider Vinegar Bundle Package', '1729915952.webp', '[]', 1, 1, 0, '2024-09-25 19:47:46', '2024-10-26 04:12:33'),
+(10, 33, NULL, 4, 9, NULL, NULL, 'Karkuma Organic Apple Cider Vinegar Bundle Package', 'karkuma-organic-apple-cider-vinegar-bundle-package', 500.00, 'Select Type', NULL, 1000, 'Karkuma Organic Apple Cider Vinegar Bundle Package', '1729915973.webp', '[]', 1, 1, 0, '2024-09-25 19:51:19', '2024-10-26 04:12:53'),
+(11, 33, NULL, 4, 9, NULL, NULL, 'Karkuma Superfood', 'karkuma-superfood', 500.00, 'percent', 5.00, 1000, 'The Karkuma Superfood is a functional food product, specially formulated for the betterment of women’s menstrual health. Its all raw materials are United State Department of Agriculture (USDA) Organic certiﬁed and collected from the different authentic sources in the world', '1729915989.webp', '[]', 1, 1, 1, '2024-09-25 19:55:29', '2024-10-26 04:13:10'),
+(12, 33, NULL, 4, 9, NULL, NULL, 'Karkuma Joint Guard', 'karkuma-joint-guard', 500.00, 'Select Type', NULL, 1000, 'Karkuma Joint Guard is a functional food product, specially formulated to natural care for bone joint. Its basic raw materials are United State Department of Agriculture (USDA) Organic certiﬁed and collected from teh different autantic sources in teh world.', '1729916004.webp', '[]', 1, 1, 1, '2024-09-25 20:01:44', '2024-10-26 04:13:25'),
+(13, 33, NULL, 4, 9, NULL, NULL, 'Karkuma Organic Honey 400g', 'karkuma-organic-honey-400g', 500.00, 'Select Type', NULL, 1000, 'Teh Karkuma Organic Honey is loaded wif more TEMPthan 900 plant compounds and extracted from teh heart of teh beehive. It is collected from a variety of flowers and is teh rarest honey in teh world. Teh uniqueness of teh black honey provides us wif health benefits that go beyond teh benefits of regular honey. This honey is a magic remedy for daily consumption. It is loaded wif nutrition and enzymes, beneficial for our health and wellness.', '1729916024.webp', '[]', 1, 0, 0, '2024-09-25 20:07:02', '2024-10-26 04:13:44'),
 (14, 36, NULL, 4, 9, 'null', 'null', 'EXTRA VIRGIN COCONUT OIL', 'extra-virgin-coconut-oil', 500.00, NULL, NULL, 1000, 'Organic Extra Virgin Coconut Oil, harvested from the purest coconut kernels in the tropical island of Sri Lanka is a nutritiously rich oil with a tropical aroma and mild coconut taste that TEMPhas plenty of uses. Our coconut oil goes through cold-pressing whereby utilizing less heat, chemicals are removed, preserving all the nutrients of the extra virgin coconut oil.', '1729405342.webp', '[]', 1, 0, 1, '2024-09-25 20:08:49', '2024-09-25 20:09:17'),
-(15, 31, NULL, 4, 9, 'null', 'null', 'Karkuma Superfood', 'karkuma-superfood', 500.00, NULL, NULL, 1000, 'Organic Extra Virgin Coconut Oil, harvested from the purest coconut kernels in the tropical island of Sri Lanka is a nutritiously rich oil with a tropical aroma and mild coconut taste that TEMPhas plenty of uses. Our coconut oil goes through cold-pressing whereby utilizing less heat, chemicals are removed, preserving all the nutrients of the extra virgin coconut oil.', '', '[]', 1, 0, 1, '2024-09-25 20:10:11', '2024-10-09 10:02:48');
+(15, 31, NULL, 4, 9, NULL, NULL, 'Karkuma Superfood', 'karkuma-superfood', 500.00, 'Select Type', NULL, 1000, 'Organic Extra Virgin Coconut Oil, harvested from the purest coconut kernels in the tropical island of Sri Lanka is a nutritiously rich oil with a tropical aroma and mild coconut taste that TEMPhas plenty of uses. Our coconut oil goes through cold-pressing whereby utilizing less heat, chemicals are removed, preserving all the nutrients of the extra virgin coconut oil.', '1729916045.webp', '[]', 1, 0, 1, '2024-09-25 20:10:11', '2024-10-26 04:14:06'),
+(16, 32, 5, 4, 9, 'null', 'null', 'Apple juice', 'apple-juice', 200.00, NULL, NULL, 20, '<p>Fresh Apple Juice</p>', '1729769054.webp', '[\"172976905442.webp\",\"172976905442.webp\"]', 1, 0, 1, '2024-10-24 11:24:14', '2024-10-24 13:15:39'),
+(17, 32, 5, 5, 9, 'null', '[null]', 'Pizza', 'pizza', 2000.00, 'flat', 200.00, 2000, '<p>Testy</p>', '1729915847.webp', '[\"17299158481.webp\"]', 1, 1, 0, '2024-10-26 04:10:48', '2024-10-26 04:11:12');
 
 -- --------------------------------------------------------
 
@@ -6406,7 +6424,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -6496,13 +6514,13 @@ ALTER TABLE `notices`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `pages`
@@ -6514,7 +6532,7 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -6532,7 +6550,7 @@ ALTER TABLE `primary_colors`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `shipping_addresses`
