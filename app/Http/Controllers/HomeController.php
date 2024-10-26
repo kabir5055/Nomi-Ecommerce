@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Subscriber;
 use Carbon\Carbon;
+use App\Models\OrderDetails;
 
 class HomeController extends Controller
 {
@@ -35,6 +36,15 @@ class HomeController extends Controller
         $totalBrand = Brand::count();
         $totalSubscriber = Subscriber::count();
         $todayOrders = Order::whereDate('created_at', Carbon::today())->count();
-        return view('back-end.home.home',compact('totalOrder','totalCategory','totalProduct','totalBrand','todayOrders','totalSubscriber'));
+
+        $todaysOrder = Order::whereDate('created_at', Carbon::today())->orderBy('created_at', 'desc')->paginate(10);
+        return view('back-end.home.home',compact('totalOrder','totalCategory','totalProduct','totalBrand','todayOrders','totalSubscriber','todaysOrder'));
+    }
+
+    public function adminPurchaseHistoryDetails($id) {
+
+        $order_details = OrderDetails::with(['order', 'product'])->where('order_id', $id)->get();
+
+        return view('back-end.home.history-details', compact('order_details'));
     }
 }

@@ -374,11 +374,15 @@ Route::group(['prefix'=>"free-shipping-limit",'as'=>'free-shipping-limit.','name
 });
 /*Free Shipping Limit*/
 
+//     Route::group(['prefix'=>"details",'as'=>'details.','namespace'=>"App\Http\Controllers"],function(){
+//         Route::get('/admin/purchase/details/{id}','HomeController@AdminPurchaseHistoryDetails')->name('admin.purchase.details');
+//     });
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin/purchase/details/{id}', [App\Http\Controllers\HomeController::class, 'adminPurchaseHistoryDetails'])->name('admin.purchase.details');
 
 Route::group(['middleware'=>'frontend'],function(){
 

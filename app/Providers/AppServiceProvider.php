@@ -8,6 +8,7 @@ use App\Models\Logo;
 use App\Models\Category;
 use App\Models\LinkType;
 use App\Models\Social;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::useBootstrap();
+
         view()->share('general', General::latest()->first());
         view()->share('logo', Logo::latest()->first());
         view()->share('frontCategories', Category::oldest()->get());

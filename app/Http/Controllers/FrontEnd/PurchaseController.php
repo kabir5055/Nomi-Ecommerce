@@ -31,4 +31,5 @@ class PurchaseController extends Controller
 
         return view('front-end.purchase-history.history-details', compact('order_details'));
     }
+
 }
