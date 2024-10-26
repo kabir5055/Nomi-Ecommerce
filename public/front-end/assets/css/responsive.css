@@ -1,0 +1,243 @@
+@media only screen and (min-width: 320px) and (max-width: 575px) {
+    #header-top {
+        height: auto;
+        padding:0px 0px;
+        position: relative;
+    }
+    .top-left-1{
+      display: none;
+    }
+
+    .top-right-1{
+      width:100%;
+    }
+
+    .login-help {
+    margin-top: 3px;
+/*  padding-left: 78px;*/
+    position: relative;
+}
+.login-help a{
+    color:var(--white);
+    text-decoration: var(--text-decoration-none);
+    background: var(--theme-secondary-bg)!important;
+    padding: 5px 10px;
+    margin: 0px 5px;
+    font-size: var(--font-12);
+    position: absolute;
+    right: 47%;
+    top:-15px;
+}
+
+.login-help a.register{
+ 
+}
+  
+   .cart {
+    position: absolute;
+    top: -70px;
+    right: 9px;
+    }
+    .cart a {
+    color: #fff;
+    background: #0056b3;
+    padding: 5px 10px;
+    }
+
+    .badge.bg-primary.shopping-cart-badge {
+     background: #fff !important;
+     color:#0056b3;
+    }
+    .search{
+      display: none;
+    }
+
+    /*banner*/
+     .carousel img {
+         height: 100%!important; 
+         margin-bottom: 10px;       
+       }
+
+.right-image {
+    width: 48%;
+    float: left;
+}
+
+.rightImage2{
+    margin-left:3%;
+}
+
+.right-image img {
+    width: 100%;
+    height: 100%!important;
+}
+
+    /*banner*/
+
+    /*new arrival*/
+    .md{
+      width:46%;
+      margin-left:2%;
+    }
+    .md1{
+      width:50%;
+    /*  margin-left:1%;*/
+    }
+    .mdn{
+      display: none;
+    }
+    /*new arrival*/
+
+    /*home banner image*/
+    .home-banner-image{
+      margin-bottom:10px;
+    }
+    .home-banner-image img {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10px;
+    }
+    .home-banner-title {
+    height: 50px;
+    font-family: 'Fjalla One', sans-serif;
+    background:#007bff;
+    background:rgba(0,0,0,.3);
+    line-height: 50px;
+    }
+    /*home banner image*/
+
+    /*product box1*/
+    .product1-box {
+     margin-bottom: 10px;
+     }
+     
+.new-arrival-box a {
+	width: 100%;
+	height: 130px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.new-arrival-box img{
+	width:100%;
+	transition: all .2s ease-out 0s;
+}
+
+    .product1-box img {
+    width: 100%;
+    height: 100%;
+    }
+    /*product box1*/
+
+    /*details page*/
+    .nav-pills .nav-link{
+      margin-right: 0px!important;
+    }
+    /*details page*/
+
+    /*cart page*/
+    a.continue-btn {
+  border: 1px solid #007bff;
+  width: 100%;
+  background: #007bff;
+  color: #fff!important;
+  text-align: center;
+}  
+button.coupon-btn {
+  border: 1px solid #007bff;
+  width: 100%;
+  background: #007bff;
+  color: #fff!important;
+  text-align: center;
+}
+.category-title::before {
+    position: absolute;
+    content: '';
+    width: 60%!important;
+    height: 100%;
+    z-index: -2;
+    background: #007bff;
+    background: #0056b3;
+}
+    /*cart page*/
+
+    /*subscribe form*/
+    .subscribe-form {
+  margin-left: 0;
+}
+.subscribe-form{
+     display: block;
+     margin-left: auto; 
+     margin-right: auto;
+}
+
+.subscribe-form input{
+     display: block;
+     margin-left: auto; 
+     margin-right: auto;
+     width:100%;
+     margin-bottom: 10px!important;
+}
+    button.subscribe_btn {
+  
+  display: block; /* Ensure block-level formatting */
+    margin-left: auto;
+    margin-right: auto;
+    width:100%;
+}
+    /*subscribe form*/
+
+   /* copy right area*/
+
+  /* .copyright {
+    position: relative;
+    height: 60px !important;
+    background: #0056b3;
+    text-align: center;
+    }*/
+
+    .copyright {
+    position: relative;
+    height: 75px !important;
+    background: #0056b3;
+    text-align: center;
+}
+
+   .left-text {
+    position: absolute;
+    right: 0;
+    text-align: center !important;
+    }
+ /* .right-text {
+      position: absolute;
+      left: 0;
+      top: 30px;
+      text-align: center;
+  }*/
+  .right-text {
+    position: absolute;
+    left: 0;
+     top: 50px; 
+    text-align: center;
+    bottom: -11px;
+}
+  .right-text a{
+    color:#fff;
+    font-weight: 600;
+  }
+  .mpt-20{
+    margin-top:20px;
+  }
+  .btn_btn{
+     margin-bottom:10px;
+  }
+  .phone-info {
+  float: left!important;
+}
+   /* copy right area*/
+
+   .nomi-details-left{
+    margin-bottom: 10px;
+   }
+}
